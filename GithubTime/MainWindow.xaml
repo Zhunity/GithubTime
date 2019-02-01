@@ -8,6 +8,7 @@
         Title="MainWindow" Height="450" Width="800">
     <Grid>
 		<Button Content="Button" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Click="Button_Click"/>
+		<DatePicker HorizontalAlignment="Left" VerticalAlignment="Top" Margin="86,78,0,0"/>
 
 	</Grid>
 </Window>
