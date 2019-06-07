@@ -49,6 +49,43 @@ namespace GithubTime
 			
 		}
 
+		public string Execute(string exe, string arg, string workDir = "")
+		{
+			System.Diagnostics.ProcessStartInfo start =
+				new System.Diagnostics.ProcessStartInfo(exe);
+			start.Arguments = arg; //确定程式命令行
+			if (!string.IsNullOrEmpty(workDir))
+			{
+				start.WorkingDirectory = workDir;
+			}
+
+			start.UseShellExecute = false; //Shell的使用
+			start.RedirectStandardInput = true; //重定向输入
+			start.RedirectStandardOutput = true; //重定向输出
+			start.RedirectStandardError = true; //重定向输出错误
+			start.CreateNoWindow = true; //设置置不显示示窗口
+
+			var proc = System.Diagnostics.Process.Start(start);
+
+			//输出出流取得命令行结果
+			if (proc != null && !start.UseShellExecute)
+			{
+				string ret = proc.StandardOutput.ReadToEnd();
+				if (!string.IsNullOrEmpty(ret))
+				{
+					//Debug.Log(ret);
+				}
+
+				ret = proc.StandardError.ReadToEnd();
+				if (!string.IsNullOrEmpty(ret))
+				{
+					//Debug.LogError(ret);
+					return ret;
+				}
+			}
+			return null;
+		}
+
 		public void FromDateTime(out SYSTEMTIME systemTime, DateTime dateTime)
 		{
 			systemTime.wYear = (ushort)dateTime.Year;
