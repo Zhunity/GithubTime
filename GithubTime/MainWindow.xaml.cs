@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Microsoft.Win32;
 
 namespace GithubTime
 {
@@ -24,6 +25,7 @@ namespace GithubTime
 		public MainWindow()
 		{
 			InitializeComponent();
+			
 		}
 
 		private void Button_Click(object sender, RoutedEventArgs e)
@@ -142,6 +144,25 @@ namespace GithubTime
 
 			[DllImport("Kernel32.dll", SetLastError = true)]
 			public static extern bool GetSystemTime(ref SYSTEMTIME time);
+		}
+
+		OpenFileDialog fileDialog = new OpenFileDialog();
+		private void Browse_Click(object sender, RoutedEventArgs e)
+		{
+			var result = fileDialog.ShowDialog();
+			if(result == true)
+			{
+				GitPath.Text = fileDialog.FileName;
+			}
+		}
+
+		private void Commit_Click(object sender, RoutedEventArgs e)
+		{
+			var result = fileDialog.ShowDialog();
+			if (result == true)
+			{
+				CommitPath.Text = fileDialog.FileName;
+			}
 		}
 	}
 }
