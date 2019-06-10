@@ -15,6 +15,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Microsoft.Win32;
+using System.Windows.Forms;
+using OpenFileDialog = Microsoft.Win32.OpenFileDialog;
 
 namespace GithubTime
 {
@@ -76,7 +78,7 @@ namespace GithubTime
 				{
 					CommitLabel.Content = date.ToString();
 					CommitProgress.Value = nowDay / daySpan;
-					MessageBox.Show((nowDay / daySpan).ToString());
+					///MessageBox.Show((nowDay / daySpan).ToString());
 					date = date.AddDays(1);
 				}
 			} );
@@ -123,16 +125,16 @@ namespace GithubTime
 			}
 			catch(Exception e)
 			{
-				MessageBox.Show(e.ToString());
+				//MessageBox.Show(e.ToString());
 				return e.ToString();
 			}
 		}
 
-		
 
-		
 
-		
+
+
+
 
 		OpenFileDialog fileDialog = new OpenFileDialog();
 		private void Browse_Click(object sender, RoutedEventArgs e)
@@ -146,15 +148,17 @@ namespace GithubTime
 			}
 		}
 
+		FolderBrowserDialog folderDialog = new FolderBrowserDialog();
 		private void Commit_Click(object sender, RoutedEventArgs e)
 		{
-			var result = fileDialog.ShowDialog();
-			if (result == true)
+			var result = folderDialog.ShowDialog();
+			if (result == System.Windows.Forms.DialogResult.Cancel)
 			{
-				CommitPath.Text = fileDialog.FileName;
-				Properties.Settings.Default.CommitPath = fileDialog.FileName;
-				Properties.Settings.Default.Save();
+				return;	
 			}
+			CommitPath.Text = folderDialog.SelectedPath;
+			Properties.Settings.Default.CommitPath = folderDialog.SelectedPath;
+			Properties.Settings.Default.Save();
 		}
 	}
 }
