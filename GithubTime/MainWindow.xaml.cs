@@ -32,7 +32,7 @@ namespace GithubTime
 		}
 
 		Random rd = new Random();
-		DateTime date ;
+		DateTime beginDate ;
 		DateTime endDate;
 		private void Button_Click(object sender, RoutedEventArgs e)
 		{
@@ -56,7 +56,7 @@ namespace GithubTime
 			//}
 			//Execute(GitPath.Text, "add .", CommitPath.Text);
 			//Execute(GitPath.Text, "commit -m \""+ dateTime.ToString() + "\"", CommitPath.Text);
-			date = DateTime.Parse(BeginDate.Text);
+			beginDate = DateTime.Parse(BeginDate.Text);
 			endDate = DateTime.Parse(EndDate.Text);
 			//MessageBox.Show("span:" + (endDate - date).ToString() + "   endDate:" + EndDate.Text.ToString() + "   date:" + BeginDate.Text.ToString());
 			Thread thread = new Thread(DisplayDate);
@@ -67,18 +67,19 @@ namespace GithubTime
 		private void DisplayDate()
 		{
 			
-			this.Dispatcher.Invoke(new Action(()=>
-				{
-					MessageBox.Show("3333333333");
-					TimeSpan span = endDate - date;
-				int daySpan = span.Days;
-				int nowDay = 0;
-				for (; date < endDate; date.AddDays(1))
+			this.Dispatcher.Invoke(()=>
+			{
+				TimeSpan span = endDate - beginDate;
+				float daySpan = span.Days;
+				DateTime date = beginDate;
+				for (float nowDay = 0; nowDay <= daySpan; nowDay++)
 				{
 					CommitLabel.Content = date.ToString();
-					//CommitProgress.Value = nowDay++ / daySpan;
+					CommitProgress.Value = nowDay / daySpan;
+					MessageBox.Show((nowDay / daySpan).ToString());
+					date = date.AddDays(1);
 				}
-			} ));
+			} );
 			
 		}
 

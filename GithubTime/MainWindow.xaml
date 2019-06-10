@@ -10,7 +10,7 @@
 		<Button x:Name="Confirm" Content="确认" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Click="Button_Click" Margin="335,242,0,0"/>
 		<DatePicker x:Name="BeginDate" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="79,138,0,0" RenderTransformOrigin="0.542,1.968"/>
 		<DatePicker x:Name="EndDate" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="356,136,0,0" RenderTransformOrigin="0.423,3.419"/>
-		<ProgressBar x:Name="CommitProgress" HorizontalAlignment="Left" Height="10" VerticalAlignment="Top" Width="100" Margin="310,315,0,0"/>
+		<ProgressBar x:Name="CommitProgress" HorizontalAlignment="Left" Height="10" VerticalAlignment="Top" Width="100" Margin="310,315,0,0" Maximum="1"/>
 		<Label x:Name="CommitLabel" Content="Label" HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="7.855,13.922" Margin="335,350,0,0"/>
 		<TextBox x:Name="GitPath" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="630" Margin="24,23,0,0"/>
 		<Button x:Name="BrowseGit" Content="浏览" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="687,22,0,0" Click="Browse_Click"/>
