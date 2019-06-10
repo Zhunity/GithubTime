@@ -29,6 +29,8 @@ namespace GithubTime
 
 		private void Button_Click(object sender, RoutedEventArgs e)
 		{
+			Properties.Settings.Default.CommitPath = "";
+			Properties.Settings.Default.Save();
 			// 取得当前系统时间
 			DateTime dateTime = DateTime.Now;
 
