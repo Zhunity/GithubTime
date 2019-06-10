@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -28,8 +29,12 @@ namespace GithubTime
 			// Properties.Settings.Default.GitPath 为应用程序时，会被设成只读
 			GitPath.Text = Properties.Settings.Default.GitPath;
 			CommitPath.Text = Properties.Settings.Default.CommitPath;
+			
 		}
 
+		Random rd = new Random();
+		DateTime date ;
+		DateTime endDate;
 		private void Button_Click(object sender, RoutedEventArgs e)
 		{
 			//// 取得当前系统时间
@@ -50,8 +55,29 @@ namespace GithubTime
 			//{
 			//	MessageBox.Show(ex.ToString());
 			//}
-			Execute(GitPath.Text, "add .", CommitPath.Text);
-			Execute(GitPath.Text, "commit -m \""+ dateTime.ToString() + "\"", CommitPath.Text);
+			//Execute(GitPath.Text, "add .", CommitPath.Text);
+			//Execute(GitPath.Text, "commit -m \""+ dateTime.ToString() + "\"", CommitPath.Text);
+			date = DateTime.Parse(BeginDate.Text);
+			endDate = DateTime.Parse(EndDate.Text);
+
+			TimeSpan span = endDate - date;
+			int daySpan = span.Days;
+			int nowDay = 0;
+			for (; date < endDate; date.AddDays(1))
+			{
+				CommitLabel.Content = date.ToString();
+				CommitProgress.Value = nowDay++ / daySpan;
+			}
+			//MessageBox.Show("span:" + (endDate - date).ToString() + "   endDate:" + EndDate.Text.ToString() + "   date:" + BeginDate.Text.ToString());
+			//Thread thread = new Thread(DisplayDate);
+			//thread.Start();
+			//CommitLabel.Content = "span:" + (endDate - date).ToString() + "   endDate:" + EndDate.Text.ToString() + "   date:" + BeginDate.Text.ToString();
+		}
+
+		private void DisplayDate()
+		{
+			
+			
 		}
 
 		public string Execute(string exe, string arg, string workDir = "")
