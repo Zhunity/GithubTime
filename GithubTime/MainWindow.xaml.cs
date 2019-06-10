@@ -25,12 +25,13 @@ namespace GithubTime
 		public MainWindow()
 		{
 			InitializeComponent();
+			// Properties.Settings.Default.GitPath 为应用程序时，会被设成只读
+			GitPath.Text = Properties.Settings.Default.GitPath;
+			CommitPath.Text = Properties.Settings.Default.CommitPath;
 		}
 
 		private void Button_Click(object sender, RoutedEventArgs e)
 		{
-			Properties.Settings.Default.CommitPath = "";
-			Properties.Settings.Default.Save();
 			// 取得当前系统时间
 			DateTime dateTime = DateTime.Now;
 
@@ -102,6 +103,8 @@ namespace GithubTime
 			if(result == true)
 			{
 				GitPath.Text = fileDialog.FileName;
+				Properties.Settings.Default.GitPath = fileDialog.FileName;
+				Properties.Settings.Default.Save();
 			}
 		}
 
@@ -111,6 +114,8 @@ namespace GithubTime
 			if (result == true)
 			{
 				CommitPath.Text = fileDialog.FileName;
+				Properties.Settings.Default.CommitPath = fileDialog.FileName;
+				Properties.Settings.Default.Save();
 			}
 		}
 	}

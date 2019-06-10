@@ -3,10 +3,10 @@
   <Profiles />
   <Settings>
     <Setting Name="GitPath" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
+      <Value Profile="(Default)">请输入git.exe地址</Value>
     </Setting>
     <Setting Name="CommitPath" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
+      <Value Profile="(Default)">请输入提交需要提交的文件的地址</Value>
     </Setting>
   </Settings>
 </SettingsFile>

@@ -25,7 +25,7 @@ namespace GithubTime.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        [global::System.Configuration.DefaultSettingValueAttribute("请输入git.exe地址")]
         public string GitPath {
             get {
                 return ((string)(this["GitPath"]));
@@ -37,7 +37,7 @@ namespace GithubTime.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        [global::System.Configuration.DefaultSettingValueAttribute("请输入提交需要提交的文件的地址")]
         public string CommitPath {
             get {
                 return ((string)(this["CommitPath"]));
