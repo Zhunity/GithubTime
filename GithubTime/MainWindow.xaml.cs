@@ -119,13 +119,13 @@ namespace GithubTime
 					string ret = proc.StandardOutput.ReadToEnd();
 					if (!string.IsNullOrEmpty(ret))
 					{
-						//Debug.Log(ret);
+						MessageBox.Show(ret);
 					}
 
 					ret = proc.StandardError.ReadToEnd();
 					if (!string.IsNullOrEmpty(ret))
 					{
-						//Debug.LogError(ret);
+						MessageBox.Show(ret);
 						return ret;
 					}
 				}
@@ -133,7 +133,7 @@ namespace GithubTime
 			}
 			catch(Exception e)
 			{
-				//MessageBox.Show(e.ToString());
+				MessageBox.Show(e.ToString());
 				return e.ToString();
 			}
 		}
