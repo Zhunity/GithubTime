@@ -17,6 +17,7 @@ using System.Windows.Shapes;
 using Microsoft.Win32;
 using System.Windows.Forms;
 using OpenFileDialog = Microsoft.Win32.OpenFileDialog;
+using MessageBox = System.Windows.Forms.MessageBox;
 
 namespace GithubTime
 {
@@ -38,37 +39,43 @@ namespace GithubTime
 		DateTime endDate;
 		private void Button_Click(object sender, RoutedEventArgs e)
 		{
-			//// 取得当前系统时间
-			DateTime dateTime = DateTime.Now;
-
-			//dateTime = dateTime.AddDays(7);
-
-			//SYSTEMTIME systemTime = SYSTEMTIME.DateTimeToSystemTime(dateTime);
-
-			//bool flag = Win32API.SetLocalTime(ref systemTime);
-			//SYSTEMTIME localTime = new SYSTEMTIME();
-			//try
-			//{
-			//	Win32API.GetLocalTime(ref localTime);
-			//	MessageBox.Show(SYSTEMTIME.SystemTimeToDateTime(localTime).ToString() + "  " + flag.ToString());
-			//}
-			//catch(Exception ex)
-			//{
-			//	MessageBox.Show(ex.ToString());
-			//}
-			//Execute(GitPath.Text, "add .", CommitPath.Text);
-			//Execute(GitPath.Text, "commit -m \""+ dateTime.ToString() + "\"", CommitPath.Text);
 			beginDate = DateTime.Parse(BeginDate.Text);
 			endDate = DateTime.Parse(EndDate.Text);
-			//MessageBox.Show("span:" + (endDate - date).ToString() + "   endDate:" + EndDate.Text.ToString() + "   date:" + BeginDate.Text.ToString());
-			Thread thread = new Thread(DisplayDate);
+			Thread thread = new Thread(DatePass);
 			thread.Start();
-			//CommitLabel.Content = "span:" + (endDate - date).ToString() + "   endDate:" + EndDate.Text.ToString() + "   date:" + BeginDate.Text.ToString();
 		}
 
-		private void DisplayDate()
+		/// <summary>
+		/// 设置系统时间
+		/// </summary>
+		/// <param name="dateTime"></param>
+		/// <returns></returns>
+		private void SetLocalTime(DateTime dateTime)
 		{
-			
+			try
+			{
+				SYSTEMTIME systemTime = SYSTEMTIME.DateTimeToSystemTime(dateTime);
+
+				bool flag = Win32API.SetLocalTime(ref systemTime);
+			}
+			catch (Exception ex)
+			{
+				MessageBox.Show(ex.ToString());
+			}
+		}
+
+		/// <summary>
+		/// 提交Github内容
+		/// </summary>
+		/// <param name="dateTime"></param>
+		private void GitHubCommit(DateTime dateTime)
+		{
+			Execute(GitPath.Text, "add .", CommitPath.Text);
+			Execute(GitPath.Text, "commit -m \"" + dateTime.ToString() + "\"", CommitPath.Text);
+		}
+
+		private void DatePass()
+		{
 			this.Dispatcher.Invoke(()=>
 			{
 				TimeSpan span = endDate - beginDate;
@@ -78,11 +85,12 @@ namespace GithubTime
 				{
 					CommitLabel.Content = date.ToString();
 					CommitProgress.Value = nowDay / daySpan;
-					///MessageBox.Show((nowDay / daySpan).ToString());
+					SetLocalTime(date);
+					GitHubCommit(date);
 					date = date.AddDays(1);
+					CommitLabel.Content = "span:" + (endDate - date).ToString() + "   endDate:" + EndDate.Text.ToString() + "   date:" + BeginDate.Text.ToString();
 				}
 			} );
-			
 		}
 
 		public string Execute(string exe, string arg, string workDir = "")
