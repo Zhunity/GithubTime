@@ -83,7 +83,7 @@ namespace GithubTime
 		{
 			string txtPath = CommitPath.Text + "/commit.txt";
 
-			File.AppendAllText(txtPath, dateTime.ToString());
+			File.AppendAllText(txtPath, "\n" + dateTime.ToString());
 		}
 
 		/// <summary>
