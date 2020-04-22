@@ -18,6 +18,7 @@ using Microsoft.Win32;
 using System.Windows.Forms;
 using OpenFileDialog = Microsoft.Win32.OpenFileDialog;
 using MessageBox = System.Windows.Forms.MessageBox;
+using System.IO;
 
 namespace GithubTime
 {
@@ -74,6 +75,20 @@ namespace GithubTime
 			Execute(GitPath.Text, "commit -m \"" + dateTime.ToString() + "\"", CommitPath.Text);
 		}
 
+		/// <summary>
+		/// 添加文本
+		/// </summary>
+		/// <param name="dateTime"></param>
+		private void AppendText(DateTime dateTime)
+		{
+			string txtPath = CommitPath.Text + "/commit.txt";
+
+			File.AppendAllText(txtPath, dateTime.ToString());
+		}
+
+		/// <summary>
+		/// 日期叠加线程
+		/// </summary>
 		private void DatePass()
 		{
 			this.Dispatcher.Invoke(()=>
@@ -86,6 +101,7 @@ namespace GithubTime
 					CommitLabel.Content = date.ToString();
 					CommitProgress.Value = nowDay / daySpan;
 					SetLocalTime(date);
+					AppendText(date);
 					GitHubCommit(date);
 					date = date.AddDays(1);
 					CommitLabel.Content = "span:" + (endDate - date).ToString() + "   endDate:" + EndDate.Text.ToString() + "   date:" + BeginDate.Text.ToString();
